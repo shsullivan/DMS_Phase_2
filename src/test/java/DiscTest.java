@@ -10,9 +10,8 @@
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
+import org.junit.jupiter.params.provider.ValueSource;
 import java.util.stream.Stream;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class DiscTest {
@@ -69,5 +68,27 @@ class DiscTest {
                 createDiscWith(manufacturer, mold, plastic, color)
         );
         assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @ParameterizedTest(name = "Invalid discID: {0}")
+    @ValueSource(ints = {0, -1, -100})
+    void testInvalidDiscIDs (int invalidID) {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+            new Disc(invalidID, validManufacturer, validMold, validPlastic, validColor, validCondition,
+                    validDescription, validContactName, validContactPhone, validFoundAt, validReturned,
+                    validSold, validMSRP)
+        );
+        assertTrue(exception.getMessage().contains("Disc ID cannot"));
+    }
+
+    @ParameterizedTest(name = "Invalid disc condition: {0}")
+    @ValueSource(ints = {0, -1, 11, 100})
+    void testInvalidDiscConditions (int invalidCondition) {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                new Disc(1, validManufacturer, validMold, validPlastic, validColor, invalidCondition,
+                        validDescription, validContactName, validContactPhone, validFoundAt, validReturned,
+                        validSold, validMSRP)
+        );
+        assertEquals("Condition must be between 1 and 10", exception.getMessage());
     }
 }
