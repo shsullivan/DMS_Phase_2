@@ -45,31 +45,31 @@ public class DISCApp {
                 case "1": // Add Disc
                     try {
                         System.out.println("Enter Disc ID: ");
-                        int discID = Integer.parseInt(sc.nextLine().trim());
+                        int discID = DiscValidator.validatePositiveInt(sc.nextLine(), "Disc ID");
                         System.out.println("Enter Manufacturer: ");
-                        String manufacturer = sc.nextLine().trim();
+                        String manufacturer = DiscValidator.validateManufacturer(sc.nextLine().trim());
                         System.out.println("Enter Mold: ");
-                        String mold = sc.nextLine().trim();
+                        String mold = DiscValidator.validateMold(sc.nextLine().trim());
                         System.out.println("Enter Plastic Type: ");
-                        String plastic = sc.nextLine().trim();
+                        String plastic = DiscValidator.validatePlastic(sc.nextLine().trim());
                         System.out.println("Enter Color: ");
-                        String color = sc.nextLine().trim();
+                        String color = DiscValidator.validateColor(sc.nextLine().trim());
                         System.out.println("Enter Condition 1 - 10: ");
-                        int condition = Integer.parseInt(sc.nextLine().trim());
+                        int condition = DiscValidator.validateCondition(sc.nextLine().trim());
                         System.out.println("Enter additional information: ");
-                        String description = sc.nextLine().trim();
+                        String description = DiscValidator.validateDescription(sc.nextLine().trim());
                         System.out.println("Enter Contact Name if present otherwise enter 'N/A': ");
-                        String contactName = sc.nextLine().trim();
+                        String contactName = DiscValidator.validateContactName(sc.nextLine().trim());
                         System.out.println("Enter Contact Phone Number if present otherwise enter 'N/A': ");
-                        String contactPhone = sc.nextLine().trim();
+                        String contactPhone = DiscValidator.validateContactPhone(sc.nextLine().trim());
                         System.out.println("Enter name of course where the disc was found: ");
-                        String foundAt = sc.nextLine().trim();
+                        String foundAt = DiscValidator.validateFoundAt(sc.nextLine().trim());
                         System.out.println("Enter 'true' if the disc has been returned otherwise enter 'false': ");
-                        boolean returned = Boolean.parseBoolean(sc.nextLine().trim());
+                        boolean returned = DiscValidator.validateBooleanInput(sc.nextLine().trim(), "Returned");
                         System.out.println("Enter 'true' if the disc has been sold otherwise enter 'false': ");
-                        boolean sold = Boolean.parseBoolean(sc.nextLine().trim());
+                        boolean sold = DiscValidator.validateBooleanInput(sc.nextLine().trim(), "Sold");
                         System.out.println("Enter the MSRP for the disc: ");
-                        double MSRP = Double.parseDouble(sc.nextLine().trim());
+                        double MSRP = DiscValidator.validatePositiveDouble(sc.nextLine().trim(), "MSRP");
 
                         Disc disc = new Disc(discID, manufacturer, mold, plastic, color, condition,description,
                                             contactName, contactPhone, foundAt, returned, sold, MSRP);
@@ -82,11 +82,8 @@ public class DISCApp {
                             System.out.println("DiscID already exists! Disc not added!");
                         }
                     }
-                    catch (NumberFormatException e) {
-                        System.out.println("Invalid entry! Disc ID, Condition, and MSRP must be numbers!");
-                    }
                     catch (IllegalArgumentException e) {
-                        System.out.println("***Error: " + e.getMessage() + "***");
+                        System.out.println("Invalid input: " + e.getMessage());
                     }
                     break;
 

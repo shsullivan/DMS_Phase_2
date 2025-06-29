@@ -34,13 +34,38 @@ public final class DiscValidator {
         return input;
     }
 
-    public static int validateDiscID(int discID) {
-        if (discID < 0) {
-            throw new IllegalArgumentException("Disc ID cannot be a negative number");
-        } else if (discID == 0) {
-            throw new IllegalArgumentException("Disc ID cannot be zero");
+    public static int validatePositiveInt(String input, String fieldName) {
+        try {
+            int value = Integer.parseInt(input.trim());
+            if (value <= 0) {
+                throw new IllegalArgumentException(fieldName + " must be greater than 0");
+            }
+            return value;
+        }
+        catch (NumberFormatException e) {
+            throw new IllegalArgumentException(fieldName + " must be a valid number");
+        }
+    }
+
+    public static double validatePositiveDouble(String input, String fieldName) {
+        try {
+            double value = Double.parseDouble(input.trim());
+            if (value < 0) {
+                throw new IllegalArgumentException(fieldName + " must be greater than 0");
+            }
+            return value;
+        }
+        catch (NumberFormatException e) {
+            throw new IllegalArgumentException(fieldName + " must be a valid value");
+        }
+    }
+
+    public static boolean validateBooleanInput(String input, String fieldName) {
+        input = input.trim().toLowerCase();
+        if (input.equals("true") || input.equals("false")) {
+            return Boolean.parseBoolean(input);
         } else {
-            return discID;
+            throw new IllegalArgumentException(fieldName + " must be true or false");
         }
     }
 
@@ -60,7 +85,9 @@ public final class DiscValidator {
         return validateTextField(input, "Color", 20);
     }
 
-    public static int validateCondition(int condition) {
+    public static int validateCondition(String input) {
+        int condition  = validatePositiveInt(input, "Condition");
+
         if (condition < 1 || condition > 10) {
             throw new IllegalArgumentException("Condition must be between 1 and 10");
         }
@@ -87,23 +114,4 @@ public final class DiscValidator {
     public static String validateFoundAt(String input) {
         return validateTextField(input, "Found at location", 50);
     }
-
-    public static double validateMSRP(double MSRP) {
-        if (MSRP < 0) {
-            throw new IllegalArgumentException("MSRP cannot be negative");
-        }
-        return MSRP;
-    }
-
-    public static boolean parseBooleanInput(String input, String fieldName) {
-        input = input.trim().toLowerCase();
-        if (input.equals("true") || input.equals("false")) {
-            return Boolean.parseBoolean(input);
-        } else {
-            throw new IllegalArgumentException(fieldName + " must be true or false");
-        }
-    }
-
-
-
 }
