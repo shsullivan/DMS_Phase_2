@@ -26,128 +26,24 @@ public class Disc {
     private double MSRP;
     private double resaleValue;
 
-    // Constructor including input validation for each attribute
+    // Constructor
     public Disc(int discID, String manufacturer, String mold, String plastic, String color, int condition,
                 String description, String contactName, String contactPhone, String foundAt, boolean returned,
                 boolean sold, double MSRP) {
-        if (discID < 0) {
-            throw new IllegalArgumentException("Disc ID cannot be a negative number");
-        }
-        else if (discID != 0) {
-            this.discID = discID;
-        }
-        else {
-            throw new IllegalArgumentException("Disc ID cannot be zero");
-        }
 
-        if (manufacturer == null) {
-            throw new IllegalArgumentException("Manufacturer cannot be null");
-        }
-        else if (manufacturer.isEmpty()) {
-            throw new IllegalArgumentException("Manufacturer cannot be empty");
-        }
-        else if (manufacturer.length() > 20) {
-            throw new IllegalArgumentException("Manufacturer cannot be longer than 20 characters");
-        }
-        else {
-            this.manufacturer = manufacturer;
-        }
-
-        if (mold == null) {
-            throw new IllegalArgumentException("Mold cannot be null");
-        }
-        else if (mold.isEmpty()) {
-            throw new IllegalArgumentException("Mold cannot be empty");
-        }
-        else if (mold.length() > 20) {
-            throw new IllegalArgumentException("Mold cannot be longer than 20 characters");
-        }
-        else {
-            this.mold = mold;
-        }
-
-        if (plastic == null) {
-            throw new IllegalArgumentException("Plastic cannot be null");
-        }
-        else if (plastic.isEmpty()) {
-            throw new IllegalArgumentException("Plastic cannot be empty");
-        }
-        else if (plastic.length() > 20) {
-            throw new IllegalArgumentException("Plastic cannot be longer than 20 characters");
-        }
-        else {
-            this.plastic = plastic;
-        }
-        if (color == null) {
-            throw new IllegalArgumentException("Color cannot be null");
-        }
-        else if (color.isEmpty()) {
-            throw new IllegalArgumentException("Color cannot be empty");
-        }
-        else if (color.length() > 20) {
-            throw new IllegalArgumentException("Color cannot be longer than 20 characters");
-        }
-        else {
-            this.color = color;
-        }
-
-        if (condition < 1 || condition > 10) {
-            throw new IllegalArgumentException("Condition must be between 1 and 10");
-        }
-        else {
-            this.condition = condition;
-        }
-
-        if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null");
-        }
-        else if (description.isEmpty()) {
-            throw new IllegalArgumentException("Description cannot be empty");
-        }
-        else {
-            this.description = description;
-        }
-
-        if (contactName == null || contactName.isEmpty()) {
-            throw new IllegalArgumentException("ContactName cannot be null");
-        }
-        else {
-            this.contactName = contactName;
-        }
-
-        if (contactPhone == null || contactPhone.isEmpty()) {
-            throw new IllegalArgumentException("ContactPhone cannot be null");
-        }
-        else if (contactPhone.length() != 10) {
-            throw new IllegalArgumentException("Contact phone number must be 10 digits");
-        }
-        else {
-            this.contactPhone = contactPhone;
-        }
-
-        if (foundAt == null) {
-            throw new IllegalArgumentException("FoundAt cannot be null");
-        }
-        else if (foundAt.isEmpty()) {
-            throw new IllegalArgumentException("FoundAt cannot be empty");
-        }
-        else if (foundAt.length() > 30) {
-            throw new IllegalArgumentException("FoundAt cannot be longer than 30 characters");
-        }
-        else {
-            this.foundAt = foundAt;
-        }
-
+        this.discID = discID;
+        this.manufacturer = manufacturer;
+        this.mold = mold;
+        this.plastic = plastic;
+        this.color = color;
+        this.condition = condition;
+        this.description = description;
+        this.contactName = contactName;
+        this.contactPhone = contactPhone;
+        this.foundAt = foundAt;
         this.returned = returned;
-
         this.sold = sold;
-
-        if (MSRP <= 0) {
-            throw new IllegalArgumentException("MSRP cannot be negative");
-        }
-        else {
-            this.MSRP = MSRP;
-        }
+        this.MSRP = MSRP;
 
         // Resale value is calculated by multiplying MSRP by a % based on condition
         // condition 1-5 = 40% MSRP; condition 6-7 = 60% MSRP; condition 8-10 = 80% MSRP

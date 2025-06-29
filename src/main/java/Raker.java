@@ -23,7 +23,7 @@ public class Raker {
     // Attributes
     private final Map<Integer, Disc> discs = new HashMap<>();
 
-    // App will sue generic constructor. No specific constructors need to be entered.
+    // App will use generic constructor. No specific constructors need to be entered.
 
     /*
      * Method: addDisc

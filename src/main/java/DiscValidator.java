@@ -14,17 +14,8 @@ public final class DiscValidator {
 
     }
 
-    public static int validateDiscID(int discID) {
-        if (discID < 0) {
-            throw new IllegalArgumentException("Disc ID cannot be a negative number");
-        } else if (discID == 0) {
-            throw new IllegalArgumentException("Disc ID cannot be zero");
-        } else {
-            return discID;
-        }
-    }
     // Helper method to validate all text fields with a max length
-    public static String validateTextField(String input, String fieldName, int maxLength) {
+    private static String validateTextField(String input, String fieldName, int maxLength) {
         if (input == null) {
             throw new IllegalArgumentException(fieldName + " cannot be null");
         } else if (input.isEmpty()) {
@@ -35,11 +26,22 @@ public final class DiscValidator {
         return input;
     }
     // Helper method to validate text fields that do not have a max length restriction
-    public static String validateNotEmpty(String input, String fieldName) {
+    // currently only used once, but created for scalability
+    private static String validateNotEmpty(String input, String fieldName) {
         if (input == null || input.isEmpty()) {
             throw new IllegalArgumentException(fieldName + " cannot be empty");
         }
         return input;
+    }
+
+    public static int validateDiscID(int discID) {
+        if (discID < 0) {
+            throw new IllegalArgumentException("Disc ID cannot be a negative number");
+        } else if (discID == 0) {
+            throw new IllegalArgumentException("Disc ID cannot be zero");
+        } else {
+            return discID;
+        }
     }
 
     public static String validateManufacturer(String input) {
@@ -91,6 +93,15 @@ public final class DiscValidator {
             throw new IllegalArgumentException("MSRP cannot be negative");
         }
         return MSRP;
+    }
+
+    public static boolean parseBooleanInput(String input, String fieldName) {
+        input = input.trim().toLowerCase();
+        if (input.equals("true") || input.equals("false")) {
+            return Boolean.parseBoolean(input);
+        } else {
+            throw new IllegalArgumentException(fieldName + " must be true or false");
+        }
     }
 
 
