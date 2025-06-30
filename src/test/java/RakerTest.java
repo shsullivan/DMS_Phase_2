@@ -1,58 +1,36 @@
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class RakerTest {
 
-    @org.junit.jupiter.api.BeforeEach
+    private Raker raker;
+    private Disc disc;
+
+    @BeforeEach
     void setUp() {
+        raker = new Raker();
+        disc = new Disc(
+                1, "Innova", "Wraith", "Star", "Red", 9,
+                "My favorite disc", "John Doe", "3348675309", "Springfield",
+                false, false, 24.99
+        );
     }
 
-    @org.junit.jupiter.api.AfterEach
-    void tearDown() {
+    @Test
+    void testAddDiscReturnsTrueForNewDisc() {
+        boolean result = raker.addDisc(disc);
+        assertTrue(result, "Expected addDisc to return true");
     }
 
-    @org.junit.jupiter.api.Test
-    void addDisc() {
+    @Test
+    void testAddDiscReturnsFalseForExistingDisc() {
+        raker.addDisc(disc);
+        boolean result = raker.addDisc(disc);
+        assertFalse(result, "Expected addDisc to return false for existing disc being added");
     }
 
-    @org.junit.jupiter.api.Test
-    void addFromFile() {
-    }
 
-    @org.junit.jupiter.api.Test
-    void removeDisc() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void listAllDiscs() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void listReturnedDiscs() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void listSoldDiscs() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void findByPhone() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void calculateReturnedValue() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void calculateSoldValue() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void returnDisc() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void sellDisc() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void updateContactInformation() {
-    }
 }

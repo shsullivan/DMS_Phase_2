@@ -99,7 +99,7 @@ public final class DiscValidator {
     }
 
     public static String validateContactName(String input) {
-        return validateTextField(input, "ContactName", 40);
+        return validateTextField(input, "Contact Name", 40);
     }
 
     public static String validateContactPhone(String input) {
@@ -107,6 +107,8 @@ public final class DiscValidator {
             throw new IllegalArgumentException("Contact Phone cannot be empty");
         } else if (input.length() != 10) {
             throw new IllegalArgumentException("Contact Phone must be 10 digits");
+        } else if (!input.matches("\\d{10}")) {
+            throw new IllegalArgumentException("Contact Phone must contain only digits");
         }
         return input;
     }
