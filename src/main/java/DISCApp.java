@@ -43,47 +43,225 @@ public class DISCApp {
 
             switch (selection) {
                 case "1": // Add Disc
-                    try {
-                        System.out.println("Enter Disc ID: ");
-                        int discID = DiscValidator.validatePositiveInt(sc.nextLine(), "Disc ID");
-                        System.out.println("Enter Manufacturer: ");
-                        String manufacturer = DiscValidator.validateManufacturer(sc.nextLine().trim());
-                        System.out.println("Enter Mold: ");
-                        String mold = DiscValidator.validateMold(sc.nextLine().trim());
-                        System.out.println("Enter Plastic Type: ");
-                        String plastic = DiscValidator.validatePlastic(sc.nextLine().trim());
-                        System.out.println("Enter Color: ");
-                        String color = DiscValidator.validateColor(sc.nextLine().trim());
-                        System.out.println("Enter Condition 1 - 10: ");
-                        int condition = DiscValidator.validateCondition(sc.nextLine().trim());
-                        System.out.println("Enter additional information: ");
-                        String description = DiscValidator.validateDescription(sc.nextLine().trim());
-                        System.out.println("Enter Contact Name if present otherwise enter 'N/A': ");
-                        String contactName = DiscValidator.validateContactName(sc.nextLine().trim());
-                        System.out.println("Enter Contact Phone Number if present otherwise enter 'N/A': ");
-                        String contactPhone = DiscValidator.validateContactPhone(sc.nextLine().trim());
-                        System.out.println("Enter name of course where the disc was found: ");
-                        String foundAt = DiscValidator.validateFoundAt(sc.nextLine().trim());
-                        System.out.println("Enter 'true' if the disc has been returned otherwise enter 'false': ");
-                        boolean returned = DiscValidator.validateBooleanInput(sc.nextLine().trim(), "Returned");
-                        System.out.println("Enter 'true' if the disc has been sold otherwise enter 'false': ");
-                        boolean sold = DiscValidator.validateBooleanInput(sc.nextLine().trim(), "Sold");
-                        System.out.println("Enter the MSRP for the disc: ");
-                        double MSRP = DiscValidator.validatePositiveDouble(sc.nextLine().trim(), "MSRP");
-
-                        Disc disc = new Disc(discID, manufacturer, mold, plastic, color, condition,description,
-                                            contactName, contactPhone, foundAt, returned, sold, MSRP);
-
-                        // Attempt to add new Disc to HashMap and provide feedback on success or failure
-                        if (raker.addDisc(disc)) {
-                            System.out.println("Disc added successfully!");
+                    boolean cancelled = false;
+                    String input;
+                    int discID = 0;
+                    while (true) {
+                        System.out.println("Enter Disc ID (type 'cancel' at any time to return to the main menu): ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
                         }
-                        else {
-                            System.out.println("DiscID already exists! Disc not added!");
+                        try {
+                            discID = DiscValidator.validatePositiveInt(input, "Disc ID");
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
                         }
                     }
-                    catch (IllegalArgumentException e) {
-                        System.out.println("Invalid input: " + e.getMessage());
+                    if (cancelled) break;
+                    String manufacturer = "";
+                    while (true) {
+                        System.out.println("Enter Manufacturer: ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            manufacturer = DiscValidator.validateManufacturer(input);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    String mold = "";
+                    while (true) {
+                        System.out.println("Enter Mold: ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            mold = DiscValidator.validateMold(input);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    String plastic = "";
+                    while (true) {
+                        System.out.println("Enter Plastic Type: ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            plastic = DiscValidator.validatePlastic(input);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    String color = "";
+                    while (true) {
+                        System.out.println("Enter Color: ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            color = DiscValidator.validateColor(input);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    int condition = 0;
+                    while (true) {
+                        System.out.println("Enter Condition 1 - 10: ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            condition = DiscValidator.validateCondition(input);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    String description = "";
+                    while (true) {
+                        System.out.println("Enter additional information: ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            description = DiscValidator.validateDescription(input);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    String contactName = "";
+                    while (true) {
+                        System.out.println("Enter Contact Name if present otherwise enter 'N/A': ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            contactName = DiscValidator.validateContactName(input);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    String contactPhone = "";
+                    while (true) {
+                        System.out.println("Enter Contact Phone Number if present otherwise enter 'N/A': ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            contactPhone = DiscValidator.validateContactPhone(input);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    String foundAt = "";
+                    while (true) {
+                        System.out.println("Enter name of course where the disc was found: ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            foundAt = DiscValidator.validateFoundAt(input);
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    boolean returned = false;
+                    while (true) {
+                        System.out.println("Enter 'true' if the disc has been returned otherwise enter 'false': ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            returned = DiscValidator.validateBooleanInput(input, "Returned");
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    boolean sold = false;
+                    while (true) {
+                        System.out.println("Enter 'true' if the disc has been sold otherwise enter 'false': ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            sold = DiscValidator.validateBooleanInput(input, "Sold");
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    double MSRP = 0.0;
+                    while (true) {
+                        System.out.println("Enter the MSRP for the disc: ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) {
+                            cancelled = true;
+                            break;
+                        }
+                        try {
+                            MSRP = DiscValidator.validatePositiveDouble(input, "MSRP");
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
+                        }
+                    }
+                    if (cancelled) break;
+                    Disc disc = new Disc(discID, manufacturer, mold, plastic, color, condition,description,
+                                         contactName, contactPhone, foundAt, returned, sold, MSRP);
+
+                    // Attempt to add new Disc to HashMap and provide feedback on success or failure
+                    if (raker.addDisc(disc)) {
+                        System.out.println("Disc added successfully!");
+                    }
+                    else {
+                        System.out.println("DiscID already exists! Disc not added!");
                     }
                     break;
 
@@ -94,20 +272,23 @@ public class DISCApp {
                     break;
 
                 case "3": // Remove a disc
-                    try {
-                        System.out.println("Enter Disc ID to remove: ");
-                        int remove = Integer.parseInt(sc.nextLine().trim()); // Capture Disc ID in working variable
-                        if (raker.removeDisc(remove)) {
-                            System.out.println("Disc removed successfully!");
-                        } else {
-                            System.out.println("Disc ID does not exist! No discs were removed!");
+                    while (true) {
+                        System.out.println("Enter Disc ID to remove (enter 'cancel' to return to the main menu): ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) break;
+                        try {
+                            int remove = DiscValidator.validatePositiveInt(input, "Disc ID");
+                            if (raker.removeDisc(remove)) {
+                                System.out.println("Disc removed successfully!");
+                            } else {
+                                System.out.println("Disc ID does not exist! No discs were removed!");
+                            }
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
                         }
                     }
-                    catch (NumberFormatException e) {
-                        System.out.println("Invalid entry! Disc ID must be a number!");
-                    }
                     break;
-
                 case "4": // List all discs
                     System.out.println("---Disc List---");
                     if(raker.listAllDiscs()) {
@@ -139,70 +320,86 @@ public class DISCApp {
                     break;
 
                 case "7": // Mark a disc returned
-                    try {
-                        System.out.println("Enter Disc ID to mark returned: ");
-                        int returnedDisc = Integer.parseInt(sc.nextLine().trim());
-                        if (raker.returnDisc(returnedDisc)) {
-                            System.out.println("Disc has been marked as returned! Great job!");
-                        } else {
-                            System.out.println("Disc ID does not exist! No discs were marked as returned!");
+                    while (true) {
+                        System.out.println("Enter Disc ID to mark returned (enter 'cancel' to return to the main menu): ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) break;
+                        try {
+                            int returnedDisc = DiscValidator.validatePositiveInt(input, "Disc ID");
+                            if (raker.returnDisc(returnedDisc)) {
+                                System.out.println("Disc has been marked as returned! Great job!");
+                            } else {
+                                System.out.println("Disc ID does not exist! No discs were marked as returned!");
+                            }
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid Input: " + e.getMessage());
                         }
                     }
-                    catch (NumberFormatException e) {
-                        System.out.println("Invalid entry! Disc ID must be a number!");
-                    }
                     break;
-
                 case "8": // Mark a disc sold
-                    try {
-                        System.out.println("Enter Disc ID to mark sold: ");
-                        int soldDisc = Integer.parseInt(sc.nextLine().trim());
-                        if (raker.sellDisc(soldDisc)) {
-                            System.out.println("Disc has been marked sold! Great job!");
-                        } else {
-                            System.out.println("Disc ID does not exist! No discs were marked sold!");
+                    while (true) {
+                        System.out.println("Enter Disc ID to mark sold (enter 'cancel' to return to the main menu): ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) break;
+                        try {
+                            int soldDisc = DiscValidator.validatePositiveInt(input, "Disc ID");
+                            if (raker.sellDisc(soldDisc)) {
+                                System.out.println("Disc has been marked sold! Great job!");
+                            } else {
+                                System.out.println("Disc ID does not exist! No discs were marked sold!");
+                            }
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input: " + e.getMessage());
                         }
-                    }
-                    catch (NumberFormatException e) {
-                        System.out.println("Invalid entry! Disc ID must be a number!");
                     }
                     break;
-
                 case "9": // Update contact information associated with a disc
-                    try {
-                        System.out.println("Enter Disc ID you would like to update Contact Information for: ");
-                        int discUpdate = Integer.parseInt(sc.nextLine().trim());
-                        System.out.println("Enter the new Contact Name: ");
-                        String contactName = sc.nextLine().trim();
-                        System.out.println("Enter the new Contact Phone Number: ");
-                        String contactPhone = sc.nextLine().trim();
-
-                        if (raker.updateContactInformation(discUpdate, contactName, contactPhone)) {
-                            System.out.println("Contact information updated successfully!");
+                    while (true) {
+                        System.out.println("Enter Disc ID you would like to update Contact Information for" +
+                                "(enter 'cancel' to return to the main menu): ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) break;
+                        try {
+                            int discUpdate = DiscValidator.validatePositiveInt(input, "Disc ID");
+                            System.out.println("Enter the new Contact Name: ");
+                            input = sc.nextLine().trim();
+                            contactName = DiscValidator.validateContactName(input);
+                            System.out.println("Enter the new Contact Phone Number: ");
+                            input = sc.nextLine().trim();
+                            contactPhone = DiscValidator.validateContactPhone(input);
+                            if (raker.updateContactInformation(discUpdate, contactName, contactPhone)) {
+                                System.out.println("Contact information updated successfully!");
+                            } else {
+                                System.out.println("Contact information could not be updated! Disc ID does not exist!");
+                            }
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid Input: " + e.getMessage());
                         }
-                        else {
-                            System.out.println("Contact information could not be updated! Disc ID does not exist!");
-                        }
-                    }
-                    catch (NumberFormatException e) {
-                        System.out.println("Invalid entry! Disc ID must be a number!");
-                    }
-                    catch (IllegalArgumentException e) {
-                        System.out.println("Invalid entry! Contact Name and Phone Number cannot be null!");
                     }
                     break;
 
                 case "10": // Search for a disc by provided phone number
-                    System.out.println("Enter phone number to search for: ");
-                    String search = sc.nextLine().trim();
-                    if (raker.findByPhone(search)) {
-                        System.out.println("---End of List---");
-                    }
-                    else {
-                        System.out.println("No Discs with this contact phone number exists!");
+                    while (true) {
+                        System.out.println("Enter phone number to search for (enter 'cancel' to return to the main " +
+                                "menu): ");
+                        input = sc.nextLine().trim();
+                        if (input.equalsIgnoreCase("cancel")) break;
+                        try {
+                            String search = DiscValidator.validateContactPhone(input);
+                            if (raker.findByPhone(search)) {
+                                System.out.println("---End of List---");
+                            } else {
+                                System.out.println("No Discs with this contact phone number exists!");
+                            }
+                            break;
+                        } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid Input: " + e.getMessage());
+                        }
                     }
                     break;
-
                 case "11": // Report total value of Discs returned to owners
                     double returnedValue = raker.calculateReturnedValue();
                     System.out.println("You have returned $" + returnedValue + " in discs to owners. Good job!");
