@@ -25,6 +25,13 @@ public class Raker {
 
     // App will use generic constructor. No specific constructors need to be entered.
 
+    // Public getter method for testing purposes
+    public Map<Integer, Disc> getDiscs() {
+        return discs;
+    }
+
+    // Custom methods for interacting with database
+
     /*
      * Method: addDisc
      * Parameter(s): Disc disc
@@ -52,7 +59,7 @@ public class Raker {
      * for attributes that do not meet the validation criteria of the Disc constructor and exceptions if the file
      * cannot be found/read.
      */
-    public void addFromFile(String filePath) {
+    public boolean addFromFile(String filePath) {
 
         // Create buffer reader and load file containing data
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -72,20 +79,20 @@ public class Raker {
 
                 try { // Try to create a new Disc object from current line
 
-                    // Set working variables to hold attributes used in Disc constructor
-                    int discID = Integer.parseInt(attributes[0].trim());
-                    String manufacturer = attributes[1].trim();
-                    String mold = attributes[2].trim();
-                    String plastic = attributes[3].trim();
-                    String color = attributes[4].trim();
-                    int condition = Integer.parseInt(attributes[5].trim());
-                    String description = attributes[6].trim();
-                    String contactName = attributes[7].trim();
-                    String contactPhone = attributes[8].trim();
-                    String foundAt = attributes[9].trim();
-                    boolean returned = Boolean.parseBoolean(attributes[10].trim());
-                    boolean sold = Boolean.parseBoolean(attributes[11].trim());
-                    double MSRP = Double.parseDouble(attributes[12].trim());
+                    // Validate inputs and set to variable
+                    int discID = DiscValidator.validatePositiveInt(attributes[0].trim(), "Disc ID");
+                    String manufacturer = DiscValidator.validateManufacturer(attributes[1].trim());
+                    String mold = DiscValidator.validateMold(attributes[2].trim());
+                    String plastic = DiscValidator.validatePlastic(attributes[3].trim());
+                    String color = DiscValidator.validateColor(attributes[4].trim());
+                    int condition = DiscValidator.validateCondition(attributes[5].trim());
+                    String description = DiscValidator.validateDescription(attributes[6].trim());
+                    String contactName = DiscValidator.validateContactName(attributes[7].trim());
+                    String contactPhone = DiscValidator.validateContactPhone(attributes[8].trim());
+                    String foundAt = DiscValidator.validateFoundAt(attributes[9].trim());
+                    boolean returned = DiscValidator.validateBooleanInput(attributes[10].trim(), "Returned");
+                    boolean sold = DiscValidator.validateBooleanInput(attributes[11].trim(), "Sold");
+                    double MSRP = DiscValidator.validatePositiveDouble(attributes[12].trim(), "MSRP");
 
                     // Check if disc on current line already exists and notify if added or already exists
                     if (addDisc(new Disc(discID, manufacturer, mold, plastic, color, condition, description,
@@ -96,10 +103,6 @@ public class Raker {
                         System.out.println("Disc " + discID + " already exists");
                     }
                 }
-                // Catch invalid number formatting for ints and  doubles
-                catch (NumberFormatException e) {
-                    System.out.println("Invalid monetary value formatting for Disc at line: " + lineCount);
-                }
                 // Catch any validation errors thrown by Disc constructor
                 catch (IllegalArgumentException e) {
                     System.out.println("Invalid entry for Disc at line" + lineCount + ": " + e.getMessage());
@@ -108,10 +111,12 @@ public class Raker {
 
             // Notify user that Discs were added successfully
             System.out.println("Discs added from: " + filePath);
+            return true; // added return for ease of testing
         }
         // Catch file path or file read error
         catch (IOException e) { // Catch file path or file read error
             System.out.println("Error reading file " + filePath + ": " + e.getMessage());
+            return false; // added return for ease of testing
         }
     }
 
