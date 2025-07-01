@@ -1,3 +1,12 @@
+/*
+ * Shawn Sullivan
+ * CEN 3024 - Software Development 1
+ * June 30, 2025
+ * DiscValidatorTest.java
+ * This file test all input validation for each attribute of the raker class. The test file checks for valid
+ * inputs as well as invalid inputs by checking for expected thrown exceptions.
+ */
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -59,8 +68,8 @@ class RakerTest {
         assertTrue(testDiscs.containsKey(2));
 
         Disc testDisc = testDiscs.get(1);
-        assertEquals("Wraith", disc.getMold());
-        assertEquals("John Doe", disc.getContactName());
+        assertEquals("Wraith", testDisc.getMold());
+        assertEquals("John Doe", testDisc.getContactName());
     }
 
     @Test
@@ -80,7 +89,7 @@ class RakerTest {
     }
 
     @Test
-    void testRemoveDiscWHenDiscDoesNotExistInDatabase() {
+    void testRemoveDiscWhenDiscDoesNotExistInDatabase() {
         boolean result = raker.removeDisc(1);
 
         assertFalse(result, "Expected remove disc to return false when disc does not exist");
