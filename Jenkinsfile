@@ -99,10 +99,15 @@ pipeline {
       }
     }
   }
-
   post {
     cleanup {
-      isUnix() ? sh("docker image prune -f || true") : bat("docker image prune -f || exit /b 0")
+      script {
+        if (isUnix()) {
+          sh 'docker image prune -f || true'
+        } else {
+          bat 'docker image prune -f || exit /b 0'
+        }
+      }
     }
   }
 }
