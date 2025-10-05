@@ -32,14 +32,18 @@ pipeline {
     stage('Compute Tags') {
       steps {
         script {
-          env.GIT_SHORT_SHA = isUnix() ?
-            sh(returnStdout: true, script: "git rev-parse --short HEAD").trim() :
-            bat(returnStdout: true, script: "git rev-parse --short HEAD").trim()
-          env.IMAGE_TAG = env.GIT_SHORT_SHA
+          if (isUnix()) {
+            env.IMAGE_TAG = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
+          } else {
+            def out = bat(returnStdout: true, script: '@echo off\r\ngit rev-parse --short HEAD').trim()
+            // Take the LAST non-empty line as the SHA
+            env.IMAGE_TAG = out.readLines().findAll { it?.trim() }.last().trim()
+          }
           echo "IMAGE TAG: ${env.IMAGE_TAG}"
         }
       }
     }
+
 
     stage('Build & Test (Maven)') {
       steps {
@@ -64,16 +68,21 @@ pipeline {
     stage('Docker Build') {
       steps {
         script {
-          def buildCmd = """
-            docker build \
-              --build-arg JAR_FILE=target/*.jar \
-              -t ${env.REGISTRY}/${env.IMAGE_REPO}:${env.IMAGE_TAG} \
-              .
-          """.trim()
-          isUnix() ? sh(buildCmd) : bat(buildCmd)
+          if (isUnix()) {
+            sh """
+              docker build \
+                --build-arg JAR_FILE=target/*.jar \
+                -t ${env.REGISTRY}/${env.IMAGE_REPO}:${env.IMAGE_TAG} \
+                .
+            """.trim()
+          } else {
+            // Single-line for Windows (no backslashes, use %VAR% expansion)
+            bat "docker build --build-arg JAR_FILE=target/*.jar -t %REGISTRY%/%IMAGE_REPO%:%IMAGE_TAG% ."
+          }
         }
       }
     }
+
 
     stage('Docker Push') {
       when {
