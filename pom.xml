@@ -16,7 +16,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>DiscApp</mainClass>
+                            <mainClass>DISCApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
