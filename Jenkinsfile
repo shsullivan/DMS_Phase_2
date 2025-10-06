@@ -82,8 +82,6 @@ pipeline {
         }
       }
     }
-
-
     stage('Docker Push') {
       when {
         expression { return params.PUSH_IMAGE }
