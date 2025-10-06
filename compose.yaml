@@ -1,0 +1,7 @@
+services:
+  discphase2:
+    image: docker.io/shsullivan/discphase2:${TAG:-latest}
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data:/data
