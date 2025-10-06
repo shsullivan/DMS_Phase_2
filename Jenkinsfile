@@ -97,8 +97,10 @@ pipeline {
             def pushTag = "${env.REGISTRY}/${env.IMAGE_REPO}:${env.IMAGE_TAG}"
             isUnix() ? sh("docker push ${pushTag}") : bat("docker push ${pushTag}")
 
-            //
-            if (env.BRANCH_NAME == 'main' || env.GIT_BRANCH == 'origin/main') {
+            def ref = (env.BRANCH_NAME ?: env.GIT_BRANCH ?: "").toLowerCase()
+            def isMainline = (ref == 'main' || ref == 'master' || ref == 'origin/main' || ref == 'origin/master' || ref == 'refs/heads/main' || ref == 'refs/heads/master')
+
+            if (isMainline) {
               def latest = "${env.REGISTRY}/${env.IMAGE_REPO}:latest"
               isUnix() ? sh("docker tag ${pushTag} ${latest}") : bat("docker tag ${pushTag} ${latest}")
               isUnix() ? sh("docker push ${latest}") : bat("docker push ${latest}")
@@ -107,7 +109,7 @@ pipeline {
         }
       }
     }
-  }
+
   post {
     cleanup {
       script {
