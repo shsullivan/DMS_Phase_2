@@ -8,7 +8,7 @@ pipeline {
 
   environment {
     REGISTRY              = "docker.io"
-    IMAGE_REPO            = "shsullivan/discphase2"       // e.g., myuser/myapp or myorg/myapp
+    IMAGE_REPO            = "shsullivan/discphase2"
     DOCKER_CREDENTIALS_ID = "docker-registry-creds"
     MAVEN_ARGS            = "-B -ntp"
   }
@@ -82,6 +82,7 @@ pipeline {
         }
       }
     }
+
     stage('Docker Push') {
       when {
         expression { return params.PUSH_IMAGE }
@@ -107,7 +108,7 @@ pipeline {
         }
       }
     }
-
+  }
   post {
     cleanup {
       script {
